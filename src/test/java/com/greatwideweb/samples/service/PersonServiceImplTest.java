@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
@@ -21,6 +23,8 @@ public class PersonServiceImplTest {
 
     @Autowired
     private PersonService personService;
+    private String duplicateLastName ="Smith";
+    private String newLastName ="Turner";
 
     @Before
     public void setup() {
@@ -35,29 +39,36 @@ public class PersonServiceImplTest {
 
     @Test
     public void ensureGetPersonReturnsExpected() {
-        Person p = personService.getPerson(2l);
-        assertEquals(p.getFirstName(), "Chloe");
-        assertEquals(p.getLastName(), "O'Brian");
+        Person p = personService.getAllPeople().get(1);
+        System.out.println(p);
+        assertEquals(p.getFirstName(), "Diana");
+        assertEquals(p.getLastName(), "Geralt");
     }
 
     @Test
     public void ensureUpdateWorksAsExpected() {
-        Person p = personService.getAllPeople().get(2);
-        assertEquals(p.getFirstName(), personService.getAllPeople().get(2).getFirstName());
-        assertEquals(p.getLastName(), personService.getAllPeople().get(2).getLastName());
-        assertNotEquals(p.getLastName(), "Jones");
-        p.setLastName("Jones");
+        Person p = personService.getAllPeople().get(1);
+        assertEquals(p.getFirstName(), personService.getAllPeople().get(1).getFirstName());
+        assertEquals(p.getLastName(), personService.getAllPeople().get(1).getLastName());
+        assertNotEquals(p.getLastName(), newLastName);
+        p.setLastName(newLastName);
         personService.savePeson(p);
-        p = personService.getAllPeople().get(2);
-        assertEquals(p.getLastName(), "Jones");
+        p = personService.getAllPeople().get(1);
+        assertEquals(p.getLastName(), newLastName);
+    }
+
+    @Test
+    public void ensureFindByLastNameWorksAsExpected() {
+        List<Person> list = personService.findPesonByLastName(duplicateLastName);
+        assertEquals(list.size(), 2);
     }
 
     private void loadPeople() {
-        personService.savePeson(new Person("Jack", "Bauer"));
-        personService.savePeson(new Person("Chloe", "O'Brian"));
-        personService.savePeson(new Person("Kim", "Bauer"));
-        personService.savePeson(new Person("David", "Palmer"));
-        personService.savePeson(new Person("Michelle", "Dessler"));
+        personService.savePeson(new Person("Mack", duplicateLastName));
+        personService.savePeson(new Person("Diana", "Geralt"));
+        personService.savePeson(new Person("Kim", duplicateLastName));
+        personService.savePeson(new Person("Ben", "Wallace"));
+        personService.savePeson(new Person("Chauncey", "Billups"));
     }
 
 
