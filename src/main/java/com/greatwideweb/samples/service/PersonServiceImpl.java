@@ -36,4 +36,7 @@ public class PersonServiceImpl implements PersonService {
     public List<Person> findPesonByLastName(String lastName) {
         return dao.findByLastName(lastName);
     }
+
+    @Override
+    public void truncatePeople() { dao.deleteAll(); }
 }

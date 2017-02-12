@@ -16,4 +16,5 @@ public interface PersonService {
     Person getPerson(Long id);
     void savePeson(Person p);
     List<Person> findPesonByLastName(String lastName);
+    void truncatePeople();
 }
