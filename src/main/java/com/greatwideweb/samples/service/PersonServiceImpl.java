@@ -3,6 +3,7 @@ package com.greatwideweb.samples.service;
 import com.greatwideweb.samples.dao.PersonDAO;
 import com.greatwideweb.samples.vo.Person;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
 /**
  * Created by Dave on 2/11/2017.
  */
-@Service
+@Component
 public class PersonServiceImpl implements PersonService {
 
     @Autowired
